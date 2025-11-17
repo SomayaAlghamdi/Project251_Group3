@@ -36,7 +36,29 @@ public class EventService {
         return events;
     }
     
-    
+    // Core Function: Search events by keyword
+    public List<Event> searchEvents(String keyword) {
+        List<Event> result = new ArrayList<>();
+            if (keyword == null || keyword.isEmpty()) {
+            // If the user didn't write anything, reset all the events
+                  return new ArrayList<>(events);
+           }
+        String lowerKeyword = keyword.toLowerCase();
+        for (Event e : events) {
+            String name = e.getName().toLowerCase();
+            String description = e.getDescription().toLowerCase() ;
+            String location = e.getLocation().toLowerCase();
+            String date = e.getDate().toLowerCase();
+
+            if (name.contains(lowerKeyword)|| description.contains(lowerKeyword)
+                || location.contains(lowerKeyword)|| date.contains(lowerKeyword)){
+
+                result.add(e);}
+        }
+
+          return result;
+        }
+
 }
 
 
