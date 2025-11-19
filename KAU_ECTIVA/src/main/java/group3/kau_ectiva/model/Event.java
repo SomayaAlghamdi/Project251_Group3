@@ -94,4 +94,15 @@ public class Event {
         this.availableSeats = availableSeats;
     }
     
+    @Override
+    public String toString() {
+    return "Event ID: " + eventId + "\n" +
+           "Name: " + name + "\n" +
+           "Description: " + description + "\n" +
+           "Date: " + date + "\n" +
+           "Time: " + time + "\n" +
+           "Location: " + location + "\n" +
+           "Available Seats: " + availableSeats + "\n";
+    }
+    
 }

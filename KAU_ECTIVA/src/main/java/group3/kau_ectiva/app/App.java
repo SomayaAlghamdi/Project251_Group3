@@ -59,9 +59,33 @@ public class App {
 
             switch (choice) {
                 case 1:
+                     // Browse / Search
+                    System.out.print("Enter keyword (leave empty to show all events): ");
+                    String keyword = scanner.nextLine();
+                    List<Event> results = eventService.searchEvents(keyword);
+                    if (results.isEmpty()) {
+                        System.out.println("No events found.");
+                    } else {
+                        System.out.println("Found events:");
+                        
+                        for (Event e : results) {
+                       System.out.println("---------------------------");
+                       System.out.println(e);
+                      
+                       }
+                    
+                    }
+                    break;
                     
 
                 case 2:
+                    // Register for event
+                    System.out.print("Enter student ID (e.g., S1, S2, S3 , S4, S5, S6 ): ");
+                    String studentId = scanner.nextLine();
+                    System.out.print("Enter event ID: ");
+                    String eventId = scanner.nextLine();
+                    registrationService.registerStudent(studentId, eventId);
+                    break;
 
                 case 3:
                     
