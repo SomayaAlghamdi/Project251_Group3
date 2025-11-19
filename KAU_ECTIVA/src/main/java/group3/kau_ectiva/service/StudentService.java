@@ -20,7 +20,7 @@ public class StudentService {
     
      public Student findById(String studentId) {
         for (Student s : students) {
-            if (s.getStudentId().equals(studentId)) {
+            if (s.getStudentId().equalsIgnoreCase(studentId)) {
                 return s;
             }
         }

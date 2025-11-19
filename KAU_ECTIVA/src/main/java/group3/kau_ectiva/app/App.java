@@ -20,9 +20,7 @@ public class App {
      public static void main(String[] args) {
         //Preparing core services
         EventService eventService = new EventService();
-        RegistrationService registrationService = new RegistrationService(eventService);
         StudentService studentService = new StudentService();
-
         // We add ready-made trial students to the system
         studentService.addStudent(new Student("S1", "Somaya Alghamdi", "somaya@stu.kau.edu.sa"));
         studentService.addStudent(new Student("S2", "Jana Bawaked", "Jana@stu.kau.edu.sa"));
@@ -30,7 +28,8 @@ public class App {
         studentService.addStudent(new Student("S4", "Wjood Alammari ", "Wjood@stu.kau.edu.sa"));
         studentService.addStudent(new Student("S5", "Atheer AlSulami", "Atheer@stu.kau.edu.sa"));
         studentService.addStudent(new Student("S6", "Lama Alghamdi", "Lama@stu.kau.edu.sa"));
-
+        
+        RegistrationService registrationService = new RegistrationService(eventService,studentService);
         ReportService reportService = new ReportService(eventService, registrationService, studentService);
 
         Scanner scanner = new Scanner(System.in);

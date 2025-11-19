@@ -10,6 +10,7 @@ package group3.kau_ectiva.service;
  */
 import group3.kau_ectiva.model.Event;
 import group3.kau_ectiva.model.Registration;
+import group3.kau_ectiva.model.Student;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +18,12 @@ import java.util.List;
 public class RegistrationService {
     private List<Registration> registrations = new ArrayList<>();
     private EventService eventService;
+    private StudentService studentService;
 
-    public RegistrationService(EventService eventService) {
-        this.eventService = eventService;
-    }
+    public RegistrationService(EventService eventService, StudentService studentService) {
+            this.eventService = eventService;
+            this.studentService = studentService;
+}
 
     public boolean registerStudent(String studentId, String eventId) {
         Event event = eventService.findById(eventId);
@@ -31,8 +34,8 @@ public class RegistrationService {
 
         // check duplicate
         for (Registration r : registrations) {
-            if (r.getStudentId().equals(studentId) &&
-                r.getEventId().equals(eventId)) {
+            if (r.getStudentId().equalsIgnoreCase(studentId) &&
+                r.getEventId().equalsIgnoreCase(eventId)) {
                 System.out.println("Student already registered.");
                 return false;
             }
