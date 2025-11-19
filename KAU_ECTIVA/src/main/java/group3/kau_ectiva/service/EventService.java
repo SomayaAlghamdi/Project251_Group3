@@ -14,6 +14,7 @@ import java.util.List;
 
 public class EventService {
     private List<Event> events = new ArrayList<>();
+    private int eventCounter= 1;
 
     public EventService() {
 
@@ -58,6 +59,12 @@ public class EventService {
 
           return result;
         }
+    
+    public String generateEventId() {
+        String id = "E" + eventCounter;
+        eventCounter++;
+        return id;
+    }
 
 }
 

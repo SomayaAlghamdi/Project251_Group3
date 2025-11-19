@@ -88,10 +88,47 @@ public class App {
                     break;
 
                 case 3:
-                    
+                    //Add new event
+                    String newId = eventService.generateEventId();
+                    System.out.println("Event ID generated automatically: " + newId);
+                    System.out.print("Enter event name: ");
+                    String newName = scanner.nextLine();
+                    System.out.print("Enter description: ");
+                    String desc = scanner.nextLine();
+                    System.out.print("Enter date (e.g., 2025-12-01): ");
+                    String date = scanner.nextLine();
+                    System.out.print("Enter time (e.g., 10:00): ");
+                    String time = scanner.nextLine();
+                    System.out.print("Enter location: ");
+                    String loc = scanner.nextLine();
+                    System.out.print("Enter capacity: ");
+                    int cap = scanner.nextInt();
+                    scanner.nextLine(); 
+
+                    Event newEvent = new Event(newId, newName, desc, date, time, loc, cap, cap);
+                    eventService.addEvent(newEvent);
+                    System.out.println("Event added successfully.");
+                    break;
+
 
                 case 4:
-     
+                    //View list of current events
+                    List<Event> allEvents = eventService.getAllEvents();
+
+                    if (allEvents.isEmpty()) {
+                        System.out.println("No events available.");
+                        break;
+                    }
+                    System.out.println("\n=== Available Events ===");
+                    for (Event e : allEvents) {
+                        System.out.println(e.getEventId() + " - " + e.getName());
+                    }
+                    System.out.println("========================");
+                    // Generate report
+                    System.out.print("Enter event ID to generate report: ");
+                    String repEventId = scanner.nextLine();
+                    reportService.generateReport(repEventId);
+                    break;
 
                 case 0:
                     System.out.println("Bye!");
