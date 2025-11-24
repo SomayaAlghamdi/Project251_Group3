@@ -76,5 +76,6 @@ public class KAU_ECTIVA_Test {
         assertEquals("Event name should match", "Innovation Hackathon", result.getName());//Is the data correct?
         assertEquals("Available seats should equal capacity", 5, result.getAvailableSeats());//Does the capacity equal the number of available seats?
     }
+    
 
 }
