@@ -62,6 +62,7 @@ public class KAU_ECTIVA_Test {
         studentService.addStudent(new Student("S2", "Jana", "jana@stu.kau.edu.sa"));
         studentService.addStudent(new Student("S3", "Wjood", "wjood@stu.kau.edu.sa"));
     }
+    
     // -------------------------------------------------------------
     // 1) Unit Test — Add Event
     // -------------------------------------------------------------
@@ -76,6 +77,10 @@ public class KAU_ECTIVA_Test {
         assertEquals("Event name should match", "Innovation Hackathon", result.getName());//Is the data correct?
         assertEquals("Available seats should equal capacity", 5, result.getAvailableSeats());//Does the capacity equal the number of available seats?
     }
+    
+    // -------------------------------------------------------------
+    // 2) Unit Test — Search Events
+    // -------------------------------------------------------------
      @Test
     public void testSearchEvents_foundKeyword() {
 
@@ -100,6 +105,9 @@ public class KAU_ECTIVA_Test {
         assertEquals("Should return all events", 2, result.size());
     }
 
+    // -------------------------------------------------------------
+    // 3) Unit Test — Registration
+    // -------------------------------------------------------------
     @Test
     public void testRegistration_successful() {
         boolean ok = registrationService.registerStudent("S1", "E1");
@@ -134,6 +142,61 @@ public class KAU_ECTIVA_Test {
         assertFalse("Event E4  does not exist", result);
     }
     
-    
+    // -------------------------------------------------------------
+    // 4) Unit Test — Generate Report
+    // -------------------------------------------------------------
+    @Test
+    public void testGenerateReport_valuesAreCorrect() {
+
+        // Register 3 students in E1
+        registrationService.registerStudent("S1", "E1");
+        registrationService.registerStudent("S2", "E1");
+        registrationService.registerStudent("S3", "E1");
+
+        // Call the report (even if it only prints)
+        reportService.generateReport("E1");
+
+        // Test the logic
+        Event e = eventService.findById("E1");
+        assertEquals(3, e.getCapacity());
+        assertEquals(0, e.getAvailableSeats());
+
+        List<Registration> regs = registrationService.getRegistrationsForEvent("E1");
+
+        assertEquals("Should have 3 registrations", 3, regs.size());
+
+        boolean has1=false, has2=false, has3=false;
+        for (Registration r : regs) {
+            if (r.getStudentId().equals("S1")) has1 = true;
+            if (r.getStudentId().equals("S2")) has2 = true;
+            if (r.getStudentId().equals("S3")) has3 = true;
+        }
+
+        assertTrue("All students should appear in report", has1 && has2 && has3);
+    }
+
+    @Test
+    public void testGenerateReport_eventWithoutRegistrations() {
+
+        // Event exists but has zero registrations
+        Event e = eventService.findById("E2");
+
+        assertNotNull(e);
+        assertEquals("Capacity stays 2", 2, e.getCapacity());
+        assertEquals("Available seats stays 2", 2, e.getAvailableSeats());
+
+        List<Registration> regs = registrationService.getRegistrationsForEvent("E2");
+
+        assertTrue("No students registered", regs.isEmpty());
+    }
+
+    @Test
+    public void testGenerateReport_eventNotFound() {
+
+        // Make sure this does not crash
+        reportService.generateReport("E4");
+
+        assertNull("E4 should not be found", eventService.findById("E4"));
+    }
 
 }
