@@ -76,6 +76,30 @@ public class KAU_ECTIVA_Test {
         assertEquals("Event name should match", "Innovation Hackathon", result.getName());//Is the data correct?
         assertEquals("Available seats should equal capacity", 5, result.getAvailableSeats());//Does the capacity equal the number of available seats?
     }
+     @Test
+    public void testSearchEvents_foundKeyword() {
+
+   List<Event> result = eventService.searchEvents("Societies");
+    assertEquals("Should find exactly 1 event", 1, result.size());
+    assertEquals("E1", result.get(0).getEventId());    }
+       @Test
+    public void testSearchEvents_partialMatch() {
+
+       List<Event> result = eventService.searchEvents("hack");
+      assertEquals("Should find exactly 1 event", 1, result.size());    }
+
+
+    @Test
+    public void testSearchEvents_notFound() {
+        List<Event> result = eventService.searchEvents("abcdef");
+        assertTrue("Result should be empty", result.isEmpty());
+    }
+     @Test
+    public void testSearchEvents_emptyKeyword_returnsAll() {
+        List<Event> result = eventService.searchEvents("");
+        assertEquals("Should return all events", 2, result.size());
+    }
+    
     
 
 }
