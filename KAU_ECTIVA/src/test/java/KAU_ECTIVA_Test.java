@@ -99,6 +99,40 @@ public class KAU_ECTIVA_Test {
         List<Event> result = eventService.searchEvents("");
         assertEquals("Should return all events", 2, result.size());
     }
+
+    @Test
+    public void testRegistration_successful() {
+        boolean ok = registrationService.registerStudent("S1", "E1");
+        assertTrue("Registration should succeed", ok);
+
+        Event e = eventService.findById("E1");
+        assertEquals("Available seats should decrease to 2", 2, e.getAvailableSeats());
+    }
+
+    @Test
+    public void testRegistration_duplicateNotAllowed() {
+        registrationService.registerStudent("S1", "E1");
+        boolean again = registrationService.registerStudent("S1", "E1");
+
+        assertFalse("Duplicate registration must fail", again);
+    }
+
+    @Test
+    public void testRegistration_fullEventNotAllowed() {
+        registrationService.registerStudent("S1", "E2");
+        registrationService.registerStudent("S2", "E2");
+
+        boolean fail = registrationService.registerStudent("S3", "E2");
+
+        assertFalse("Should reject registration when event is full", fail);
+    }
+
+    @Test
+    public void testRegistration_eventDoesNotExist() {
+        boolean result = registrationService.registerStudent("S1", "E4");
+
+        assertFalse("Event E4  does not exist", result);
+    }
     
     
 
