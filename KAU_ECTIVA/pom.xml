@@ -10,4 +10,14 @@
         <maven.compiler.release>25</maven.compiler.release>
         <exec.mainClass>com.mycompany.kau_ectiva.KAU_ECTIVA</exec.mainClass>
     </properties>
+    <dependencies>
+        <!-- JUnit 4 for unit testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 </project>
